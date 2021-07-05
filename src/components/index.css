@@ -1,0 +1,25 @@
+.current-key-main{
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.current-key-text .ant-result-icon{
+    font-size: 5rem;
+    color: green;
+}
+
+.current-key-text .ant-result-title{
+    font-size: 2rem;
+    
+}
+
+.current-key-text .ant-result-subtitle{
+    font-size: 3rem;
+    /* background-color: green; */
+    /* color: white; */
+    padding: 20px;
+    /* border-radius: 10px; */
+}

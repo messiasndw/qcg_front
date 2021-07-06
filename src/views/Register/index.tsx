@@ -2,14 +2,11 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { register, RegisterType } from '../../redux/Auth/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
-// import { RegisterType } from '../../redux/Auth/actions';
 
 const Register = () => {
 
     const dispatch = useDispatch()
-    const { isAuthenticated, isAuthenticating } = useSelector((state: ReduxState) => state.Auth)
-
-    console.log(isAuthenticating)
+    const { isRegistering } = useSelector((state: ReduxState) => state.Auth)
 
     const onFinish = (form: RegisterType) => {
         dispatch(register(form))
@@ -43,7 +40,7 @@ const Register = () => {
                     name="name"
                     rules={[{ required: true, message: 'Please input your name!' }, { min: 5, message: 'Name must be valid!' }]}
                 >
-                    <Input disabled={isAuthenticating} />
+                    <Input disabled={isRegistering} />
                 </Form.Item>
 
                 <Form.Item
@@ -51,7 +48,7 @@ const Register = () => {
                     name="companyName"
                     rules={[{ required: true, message: 'Please input your company name!' }, { min: 5, message: 'Company name must be valid!' }]}
                 >
-                    <Input disabled={isAuthenticating} />
+                    <Input disabled={isRegistering} />
                 </Form.Item>
 
                 <Form.Item
@@ -59,7 +56,7 @@ const Register = () => {
                     name="email"
                     rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: 'Email must be valid!' }]}
                 >
-                    <Input disabled={isAuthenticating} />
+                    <Input disabled={isRegistering} />
                 </Form.Item>
 
                 <Form.Item
@@ -68,7 +65,7 @@ const Register = () => {
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                    <Input.Password disabled={isAuthenticating} />
+                    <Input.Password disabled={isRegistering} />
                 </Form.Item>
 
                 <Form.Item
@@ -77,7 +74,7 @@ const Register = () => {
                     name="confirmPassword"
                     rules={[{ required: true, message: 'Please confirm your password!' }, passwordValidation]}
                 >
-                    <Input.Password disabled={isAuthenticating} />
+                    <Input.Password disabled={isRegistering} />
                 </Form.Item>
 
                 <Form.Item
@@ -88,12 +85,12 @@ const Register = () => {
                         span: 16,
                     }}
                 >
-                    <Checkbox disabled={isAuthenticating}>Log in after registration is complete.</Checkbox>
+                    <Checkbox disabled={isRegistering}>Log in after registration is complete.</Checkbox>
                 </Form.Item>
 
                 <Form.Item
                     wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button disabled={isAuthenticating} type="primary" htmlType="submit">
+                    <Button disabled={isRegistering} type="primary" htmlType="submit">
                         Submit
                     </Button>
 

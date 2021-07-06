@@ -4,12 +4,14 @@ import {login, register} from './actions'
 const initialState: AuthState = {
     isAuthenticating: false,
     isAuthenticated: false,
+    isRegistering: false,
     name: '',
     email: ''
 }
 interface AuthState{
     isAuthenticating: boolean,
     isAuthenticated: boolean,
+    isRegistering: boolean,
     name: string,
     email: string,
 }

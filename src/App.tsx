@@ -4,14 +4,18 @@ import './App.css';
 import Router from './routes/index'
 import { Provider } from 'react-redux'
 import { store } from './redux/store';
+import Context,{ ToastProvider} from './context/toast';
 
 const App: FC = () => {
+
   return (
     <Provider store={store}>
-      <div className="App">
-        <Router />
+      <ToastProvider>
+        <div className="App">
+          <Router />
 
-      </div>
+        </div>
+      </ToastProvider>
     </Provider>
   );
 }

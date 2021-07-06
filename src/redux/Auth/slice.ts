@@ -35,12 +35,13 @@ export const authSlice = createSlice({
         })
         //REGISTER
         .addCase(register.pending, (state,action) => {
+            state.isRegistering = true
         })
         .addCase(register.fulfilled, (state,action) => {
-
+            state.isRegistering = false
         })
         .addCase(register.rejected, (state,action) => {
-
+            state.isRegistering = false
         })
     }
 })

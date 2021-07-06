@@ -1,8 +1,17 @@
 import { Form, Input, Button, Checkbox } from 'antd';
+import { login } from '../../redux/Auth/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxState } from '../../redux/store';
 
-const Demo = () => {
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+const Login = () => {
+
+    const dispatch = useDispatch()
+    const {isAuthenticated,isAuthenticating} = useSelector((state: ReduxState) => state.Auth)
+    
+    console.log(isAuthenticating)
+
+    const onFinish = ({email,password}:{email: string, password: string}) => {
+        dispatch(login({email,password}))
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -20,11 +29,11 @@ const Demo = () => {
                 onFinishFailed={onFinishFailed}
             >
                 <Form.Item
-                    label="Username"
-                    name="username"
+                    label="email"
+                    name="email"
                     rules={[{ required: true, message: 'Please input your username!'}, {type: 'email', message: 'Email must be valid!'}]}
                 >
-                    <Input onChange={(e) =>{console.log(e.target)}} />
+                    <Input disabled={isAuthenticating} onChange={(e) =>{console.log(e.target)}} />
                 </Form.Item>
 
                 <Form.Item
@@ -32,10 +41,10 @@ const Demo = () => {
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                    <Input.Password />
+                    <Input.Password disabled={isAuthenticating} />
                 </Form.Item>
 
-                <Form.Item
+                {/* <Form.Item
                     name="remember"
                     valuePropName="checked"
                     wrapperCol={{
@@ -44,11 +53,11 @@ const Demo = () => {
                     }}
                 >
                     <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item
                     wrapperCol={{offset: 8, span: 16}}>
-                    <Button type="primary" htmlType="submit">
+                    <Button disabled={isAuthenticating} type="primary" htmlType="submit">
                         Submit
                     </Button>
 
@@ -58,4 +67,4 @@ const Demo = () => {
     );
 };
 
-export default Demo
+export default Login

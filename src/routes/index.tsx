@@ -10,6 +10,7 @@ import AuthRoute from "./AuthRoute";
 
 import Panel from '../layouts/Auth/Panel'
 import Login from "../views/Login";
+import Register from "../views/Register";
 
 const x = () => {
     return <Button>a</Button>
@@ -19,6 +20,7 @@ export default function App() {
     return (
         <Router>
             <Switch>
+                <GuestRoute exact path='/register' component={Register} />
                 <GuestRoute exact path='/login' component={Login} />
                 <AuthRoute exact path='/panel' component={Panel} />
                 <AuthRoute exact path='/managment' component={x} />

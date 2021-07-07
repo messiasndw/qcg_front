@@ -4,18 +4,21 @@ import './App.css';
 import Router from './routes/index'
 import { Provider } from 'react-redux'
 import { store } from './redux/store';
-import Context,{ ToastProvider} from './context/toast';
+import { ToastProvider } from './context/toast';
+import { WebSocketContextProvider } from './context/websocket';
 
 const App: FC = () => {
 
   return (
     <Provider store={store}>
-      <ToastProvider>
-        <div className="App">
-          <Router />
+      <WebSocketContextProvider>
+        <ToastProvider>
+          <div className="App">
+            <Router />
 
-        </div>
-      </ToastProvider>
+          </div>
+        </ToastProvider>
+      </WebSocketContextProvider>
     </Provider>
   );
 }

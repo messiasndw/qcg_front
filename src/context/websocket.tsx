@@ -7,11 +7,12 @@ const socket = io('http://localhost:8000')
 const WebSocketContext = createContext(socket)
 
 socket.on('connect',() => {
-    console.log("foi")
+    console.log("socket connected!")
+
 })
 
 socket.on('connect_error',() => {
-    console.log("deu erro foi")
+    console.log("socket disconnected!")
 })
 
 

@@ -14,15 +14,14 @@ export const ToastProvider = (props: any) => {
     const [api, contextHolder] = notification.useNotification();
 
     React.useEffect(() => {
-        dispatch(toast(5))
-    }, [])
 
-    React.useEffect(() => {
-        if (toasts.length != 0) {
-            api.info({
-                message: 'a',
-                description: '2',
-                // placement:'topLeft'
+        const lastToast: any = toasts[toasts.length - 1]
+
+        if (lastToast) {
+            api['info']({
+                message: lastToast.title,
+                description: lastToast.body,
+                placement: lastToast.position || 'topRight',
             });
         }
     }, [toasts])

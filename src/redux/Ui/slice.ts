@@ -15,7 +15,7 @@ export const uiSlice = createSlice({
     initialState,
     reducers: {
         toast: (state,action : PayloadAction<any>) => {
-            state.toasts.push({name:'a'})
+            state.toasts.push({...action.payload})
         }
     },
 })

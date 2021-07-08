@@ -23,7 +23,7 @@ export default function App() {
                 <GuestRoute exact path='/register' component={Register} />
                 <GuestRoute exact path='/login' component={Login} />
                 <AuthRoute exact path='/panel' component={Panel} />
-                <AuthRoute exact path='/managment' component={x} />
+                <AuthRoute exact path='/profile' component={x} />
                 
                 <Route path="/">
                     <h1>About</h1>

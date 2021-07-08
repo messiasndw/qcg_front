@@ -1,29 +1,49 @@
 import axios from "axios";
+import { logout } from "../redux/Auth/slice";
+import { toast } from "../redux/Ui/slice";
 
 const Axios = axios.create({
-    baseURL: 'http://localhost:8000',
-    timeout: 10000,
-    headers: {'X-Custom-Header': 'foobar'}
+  baseURL: 'http://localhost:8000',
+  timeout: 10000,
+  headers: { 'X-Custom-Header': 'foobar' }
 });
 
-Axios.interceptors.request.use(function (config) {
-    // Do something before request is sent
-    // console.log("interceptor request")
+export const setInterceptors = (store) => {
+  const {dispatch} = store
+  Axios.interceptors.request.use(function (config) {
+
+    const token = localStorage.getItem('access_token')
+    if (!!token) {
+        config.headers.Authorization = "Bearer " + token
+    }
     return config;
   }, function (error) {
     // Do something with request error
     return Promise.reject(error);
   });
 
-// Add a response interceptor
-Axios.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
+  // Add a response interceptor
+  Axios.interceptors.response.use(function (response) {
+    
     return response;
   }, function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+    
+    const {response} = error
+
+    switch (response.status) {
+      
+      case 401:
+        dispatch(toast({title:'Authentication error', body:response.data.message, type: 'error'}))
+        dispatch(logout())
+        break;
+    
+      default:
+        break;
+
+    }
     return Promise.reject(error);
   });
+}
+
 
 export default Axios

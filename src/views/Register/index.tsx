@@ -1,5 +1,5 @@
 import { Form, Input, Button, Checkbox } from 'antd';
-import { register, RegisterType } from '../../redux/Auth/actions';
+import { register} from '../../redux/Auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
 import WebSocketContext from '../../context/websocket';
@@ -10,13 +10,14 @@ const Register = () => {
 
     const dispatch = useDispatch()
     const socket = useContext(WebSocketContext)
-    const { isRegistering } = useSelector((state: ReduxState) => state.Auth)
+    // const { isRegistering } = useSelector((state: ReduxState) => state.Auth)
+    const isRegistering = false
 
     useEffect(() => {
         
     })
 
-    const onFinish = (form: RegisterType) => {
+    const onFinish = (form: any) => {
         dispatch(register(form))
     };
 

@@ -1,10 +1,11 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {login, register} from './actions'
+import {login, register, me} from './actions'
 
 const initialState: AuthState = {
     isAuthenticating: false,
     isAuthenticated: false,
     isRegistering: false,
+    isMeing: false,
     name: '',
     email: ''
 }
@@ -12,6 +13,7 @@ interface AuthState{
     isAuthenticating: boolean,
     isAuthenticated: boolean,
     isRegistering: boolean,
+    isMeing: boolean,
     name: string,
     email: string,
 }
@@ -19,16 +21,20 @@ interface AuthState{
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        logout: (state,action) => {
+            localStorage.removeItem('access_token')
+            state.isAuthenticated = false
+        }
+    },
     extraReducers: (builder) => {
         builder
-        //LOGIN
         .addCase(login.pending, (state,action) => {
             state.isAuthenticating = true
         })
         .addCase(login.fulfilled, (state,action) => {
             state.isAuthenticating = false
-            console.log(action)
+            state.isAuthenticated = true
         })
         .addCase(login.rejected, (state,action) => {
             state.isAuthenticating = false
@@ -43,8 +49,20 @@ export const authSlice = createSlice({
         .addCase(register.rejected, (state,action) => {
             state.isRegistering = false
         })
+        //ME
+        .addCase(me.pending, (state,action) => {
+            state.isMeing = true
+        })
+        .addCase(me.fulfilled, (state,action) => {
+            state.isMeing = false
+        })
+        .addCase(me.rejected, (state,action) => {
+            state.isMeing = false
+        })
     }
 })
 
+export {login, register, me}
+export const {logout} = authSlice.actions
 export default authSlice.reducer
 

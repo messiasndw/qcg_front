@@ -18,11 +18,32 @@ export const ToastProvider = (props: any) => {
         const lastToast: any = toasts[toasts.length - 1]
 
         if (lastToast) {
-            api['info']({
-                message: lastToast.title,
-                description: lastToast.body,
-                placement: lastToast.position || 'topRight',
-            });
+            switch (lastToast.type) {
+                case 'info':
+                    api.info({
+                        message: lastToast.title,
+                        description: lastToast.body,
+                        placement: lastToast.position || 'topRight',
+                    });
+                    break;
+                case 'success':
+                    api.success({
+                        message: lastToast.title,
+                        description: lastToast.body,
+                        placement: lastToast.position || 'topRight',
+                    });
+                    break;
+                case 'error':
+                    api.error({
+                        message: lastToast.title,
+                        description: lastToast.body,
+                        placement: lastToast.position || 'topRight',
+                    });
+                    break;
+                default:
+                    break;
+            }
+
         }
     }, [toasts])
 

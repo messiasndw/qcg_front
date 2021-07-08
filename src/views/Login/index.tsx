@@ -1,15 +1,13 @@
 import { Form, Input, Button, Checkbox } from 'antd';
-import { login } from '../../redux/Auth/actions';
+import { login } from '../../redux/Auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
 
 const Login = () => {
 
     const dispatch = useDispatch()
-    const {isAuthenticated,isAuthenticating} = useSelector((state: ReduxState) => state.Auth)
+    const {isAuthenticating} = useSelector((state: ReduxState) => state.Auth)
     
-    console.log(isAuthenticating)
-
     const onFinish = ({email,password}:{email: string, password: string}) => {
         dispatch(login({email,password}))
     };
@@ -29,11 +27,11 @@ const Login = () => {
                 onFinishFailed={onFinishFailed}
             >
                 <Form.Item
-                    label="email"
+                    label="Email"
                     name="email"
                     rules={[{ required: true, message: 'Please input your username!'}, {type: 'email', message: 'Email must be valid!'}]}
                 >
-                    <Input disabled={isAuthenticating} onChange={(e) =>{console.log(e.target)}} />
+                    <Input disabled={isAuthenticating} />
                 </Form.Item>
 
                 <Form.Item

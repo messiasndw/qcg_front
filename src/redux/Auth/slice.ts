@@ -1,21 +1,35 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {login, register, me} from './actions'
+import {login, register, me, updateProfile} from './actions'
 
 const initialState: AuthState = {
     isAuthenticating: false,
     isAuthenticated: false,
     isRegistering: false,
     isMeing: false,
-    name: '',
-    email: ''
+    isUpdatingProfile: false,
+    me:{
+        name: '',
+        surename: '',
+        email: '',
+        company: {
+            name: ''
+        }
+    }
 }
 interface AuthState{
     isAuthenticating: boolean,
     isAuthenticated: boolean,
     isRegistering: boolean,
     isMeing: boolean,
-    name: string,
-    email: string,
+    isUpdatingProfile: boolean,
+    me:{
+        name: string,
+        surename: string,
+        email: string,
+        company: {
+            name: string
+        }
+    }
 }
 
 export const authSlice = createSlice({
@@ -54,15 +68,30 @@ export const authSlice = createSlice({
             state.isMeing = true
         })
         .addCase(me.fulfilled, (state,action) => {
+            const {name, email, surename, company} = action.payload
+            state.me.name = name
+            state.me.surename = surename
+            state.me.email = email
+            state.me.company.name = company.name
             state.isMeing = false
         })
         .addCase(me.rejected, (state,action) => {
             state.isMeing = false
         })
+        //UPDATE PROFILE
+        .addCase(updateProfile.pending, (state,action) => {
+            state.isUpdatingProfile = true
+        })
+        .addCase(updateProfile.fulfilled, (state,action) => {
+            state.isUpdatingProfile = false
+        })
+        .addCase(updateProfile.rejected, (state,action) => {
+            state.isUpdatingProfile = false
+        })
     }
 })
 
-export {login, register, me}
+export {login, register, me, updateProfile}
 export const {logout} = authSlice.actions
 export default authSlice.reducer
 

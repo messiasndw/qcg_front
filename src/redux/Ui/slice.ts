@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction} from "@reduxjs/toolkit";
-// import {login, register} from './actions'
 
 const initialState: AuthState = {
     toasts: [],

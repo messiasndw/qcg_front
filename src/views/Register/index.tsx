@@ -53,6 +53,14 @@ const Register = () => {
                 </Form.Item>
 
                 <Form.Item
+                    label="Surename"
+                    name="surename"
+                    rules={[{ required: true, message: 'Please input your surename!' }, { min: 5, message: 'Surename must be valid!' }]}
+                >
+                    <Input disabled={isRegistering} />
+                </Form.Item>
+
+                <Form.Item
                     label="Company Name"
                     name="companyName"
                     rules={[{ required: true, message: 'Please input your company name!' }, { min: 5, message: 'Company name must be valid!' }]}

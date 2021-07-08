@@ -6,13 +6,7 @@ const { Header } = Layout;
 
 const HeaderLayout = () => {
     return (
-        <Header className="header">
-            <div className="logo" />
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                <Menu.Item key="1"><Link to='profile'>Profile</Link></Menu.Item>
-                
-            </Menu>
-        </Header>
+        <Header className="site-layout-background" style={{ padding: 0 }} />
     )
 }
 

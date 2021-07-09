@@ -13,26 +13,26 @@ const KeysGenerate = () => {
         console.log(e)
     }
 
-    const onNewKey = () => {
-        Modal.confirm({
-            centered: true,
-            title: 'Generate a New Key?',
-            // icon: <ExclamationCircleFilled />,
-            content: <>
-            {/* <Text>Select</Text> */}
-            <Select placeholder='Select Department' style={{ width: '100%' }}></Select>
-            </>,
-            okText: 'Generate',
-            cancelText: 'Cancel',
-            onOk: (e) => {console.log(e)}
-        });
-    }
+    // const onNewKey = () => {
+    //     Modal.confirm({
+    //         centered: true,
+    //         title: 'Generate a New Key?',
+    //         // icon: <ExclamationCircleFilled />,
+    //         content: <>
+    //         {/* <Text>Select</Text> */}
+    //         <Select placeholder='Select Department' style={{ width: '100%' }}></Select>
+    //         </>,
+    //         okText: 'Generate',
+    //         cancelText: 'Cancel',
+    //         onOk: (e) => {console.log(e)}
+    //     });
+    // }
 
     return (
         <>
             <Row style={{}}>
                 <Col style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }} span='24'>
-                    <Button onClick={onNewKey} type='primary'>New Key</Button>
+                    <Button type='primary'>New Key</Button>
                 </Col>
 
                 <Col span='24'>

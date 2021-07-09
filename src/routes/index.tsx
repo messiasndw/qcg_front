@@ -12,6 +12,7 @@ import Panel from '../layouts/Auth/Panel'
 import Login from "../views/Login";
 import Register from "../views/Register";
 import Profile from "../views/Profile";
+import Users from "../views/Users";
 
 const x = () => {
     return <Button>a</Button>
@@ -25,7 +26,7 @@ export default function App() {
                 <GuestRoute exact path='/login' component={Login} />
                 <AuthRoute exact path='/panel' component={Panel} />
                 <AuthRoute exact path='/profile' component={Profile} />
-                <AuthRoute exact path='/users' component={x} />
+                <AuthRoute exact path='/users' component={Users} />
                 <AuthRoute exact path='/desks' component={x} />
                 
                 <Route path="/">

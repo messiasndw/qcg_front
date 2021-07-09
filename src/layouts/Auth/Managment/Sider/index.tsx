@@ -36,9 +36,10 @@ const SiderLayout = () => {
         <Menu.Item key="desks" icon={<DesktopOutlined />}>
           <Link to='/desks'>Desks</Link>
         </Menu.Item>
-        <Menu.Item key="keys" icon={<KeyOutlined />}>
-          <Link to='/keys'>Keys</Link>
-        </Menu.Item>
+        <SubMenu key="keys" icon={<KeyOutlined />} title="Keys">
+          <Menu.Item key="keys1"><Link to='/keys/generate'>Generate</Link></Menu.Item>
+          <Menu.Item key="keys2"><Link to='/keys/manage'>Manage</Link></Menu.Item>
+        </SubMenu>
         <SubMenu key="sub2" icon={<SettingOutlined />} title="Settings">
           <Menu.Item key="6">UI</Menu.Item>
         </SubMenu>

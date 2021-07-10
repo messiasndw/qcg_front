@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setInterceptors } from '../services/api'
 import Auth from './Auth/slice'
 import Ui from './Ui/slice'
+import Keys from './Keys/slice'
 
 export const store = configureStore({
     reducer: {
         Auth,
-        Ui
+        Ui,
+        Keys
     },
 })
 

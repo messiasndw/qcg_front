@@ -19,7 +19,6 @@ const SiderLayout = () => {
   const [collapsed, setCollapse] = useState(false)
 
   const onCollapse = (collapsed: any) => {
-    console.log(collapsed);
     setCollapse((prevState) => !prevState );
   };
 

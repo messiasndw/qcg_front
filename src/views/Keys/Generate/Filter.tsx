@@ -8,19 +8,12 @@ const Filter = () => {
     const [form] = Form.useForm()
 
     const onFinish = (values: any) => {
-        console.log(values)
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
     };
 
-    useEffect(() => {
-        console.log("getting all departments")
-    },[])
-
     const options = [{ value: 'gold', label: 'Department 1' }, { value: 'lime', label: 'Department 2' }]
-
 
     return (
 

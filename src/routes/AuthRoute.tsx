@@ -14,10 +14,8 @@ const AuthRoute = ({ ...routeProps }: PrivateRouteProps) => {
 
     const dispatch = useDispatch()
     const { isMeing, isAuthenticated } = useSelector(({ Auth }: ReduxState) => Auth)
-    console.log(isMeing)
     React.useEffect(() => {
         // dispatch(toast({}))
-        console.log("nao manda")
         dispatch(me())
     }, [])
 

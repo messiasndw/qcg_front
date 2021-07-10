@@ -19,7 +19,6 @@ const { Title } = Typography;
 const ManagmentLayout: FC<ManagmentProp> = ({ children }) => {
 
   const history = useHistory()
-  console.log(history)
 
   return (
     <Layout style={{ minHeight: '100vh' }}>

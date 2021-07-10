@@ -12,6 +12,7 @@ const initialState: AuthState = {
         surename: '',
         email: '',
         company: {
+            _id: '',
             name: ''
         }
     }
@@ -27,6 +28,7 @@ interface AuthState{
         surename: string,
         email: string,
         company: {
+            _id: string,
             name: string
         }
     }
@@ -73,6 +75,7 @@ export const authSlice = createSlice({
             state.me.surename = surename
             state.me.email = email
             state.me.company.name = company.name
+            state.me.company._id = company._id
             state.isMeing = false
         })
         .addCase(me.rejected, (state,action) => {

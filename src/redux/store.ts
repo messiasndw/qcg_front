@@ -3,12 +3,14 @@ import { setInterceptors } from '../services/api'
 import Auth from './Auth/slice'
 import Ui from './Ui/slice'
 import Keys from './Keys/slice'
+import Users from './Users/slice'
 
 export const store = configureStore({
     reducer: {
         Auth,
         Ui,
-        Keys
+        Keys,
+        Users
     },
 })
 

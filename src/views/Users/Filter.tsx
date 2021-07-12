@@ -1,16 +1,20 @@
 import { Form, Input, Button, Checkbox, Row, Col, Collapse, Cascader } from 'antd';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateProfile } from '../../redux/Auth/actions';
 import { ReduxState } from '../../redux/store';
+import { fetchUsers } from '../../redux/Users/actions';
 
 const { Panel } = Collapse;
 
 const Filter = () => {
 
+    const dispatch = useDispatch()
     const [form] = Form.useForm()
-
+    
     const onFinish = (values: any) => {
+        console.log(values)
         // dispatch(updateProfile(values))
         // console.log(values);
     };
@@ -18,6 +22,11 @@ const Filter = () => {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+    useEffect(() => {
+        console.log("2")
+        dispatch(fetchUsers({}))
+    },[])
 
     const activeOptions = [{ label: 'Active', value: 'true' }, { label: 'Idle', value: 'false' }]
 

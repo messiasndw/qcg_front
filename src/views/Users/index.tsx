@@ -1,14 +1,32 @@
-import React from "react";
+import React, {useState} from "react";
 import Filter from "./Filter";
-import { Card, Row, Col, Button } from 'antd';
+import { Row, Col, Button } from 'antd';
 import UsersTable from "./Table";
+import CreateModal from "./Create";
+import { useEffect } from "react";
 
 const Users = () => {
+
+    const [modal,setModal] = useState({open: false, data: {}})
+
+    useEffect(() => {
+        console.log('12')
+    },[])
+
+    const handleCloseModal = () => {
+        setModal(prevState => {
+            return {open: false, data: {}}
+        })
+    }
+
     return (
         <>
             <Row style={{}}>
                 <Col style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }} span='24'>
-                    <Button type='primary'>New User</Button>
+                    {/* NEW USER */}
+                    <Button onClick={() => {setModal(prevState => ({...prevState, open: true}))}} type='primary'>New User</Button>
+                    <CreateModal handleCloseModal={handleCloseModal} isOpen={modal.open}></CreateModal>
+
                 </Col>
 
                 <Col span='24'>

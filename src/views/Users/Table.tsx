@@ -1,4 +1,6 @@
 import { Table, Tag, Space, Button, Avatar, Tooltip, Modal } from 'antd';
+import { useSelector } from 'react-redux';
+
 import {
     DeleteOutlined,
     MessageOutlined,
@@ -6,10 +8,22 @@ import {
     UserOutlined,
     ExclamationCircleFilled
 } from '@ant-design/icons';
+import { ReduxState } from '../../redux/store';
 
 const { Column, ColumnGroup } = Table;
 
 const UsersTable = () => {
+
+    const {users, isFetching} = useSelector(({Users}: ReduxState) => Users)
+    console.log(users)
+
+    const data = users.map((data: any,key) => {
+        const {_id, name, surename, email, active} = data
+        return (
+            {key,_id, name, surename, email,active}
+        )
+    })
+
 
     const confirmDelete = (user: any) => {
         Modal.confirm({
@@ -24,22 +38,22 @@ const UsersTable = () => {
         });
     }
 
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-        },
-    ];
+    // const data = [
+    //     {
+    //         key: '1',
+    //         name: 'John Brown',
+    //         age: 32,
+    //         address: 'New York No. 1 Lake Park',
+    //     },
+    // ];
 
     return (
-        <Table dataSource={data} >
+        <Table dataSource={data} loading={isFetching} >
             <Column
                 title="Picture"
                 key="picture"
                 render={(data) => (
-                    <Avatar src="https://material-ui.com/static/images/avatar/1.jpg" size={46} icon={<UserOutlined />} />
+                    <Avatar src={data.photo || ''} size={46} icon={<UserOutlined />} />
                 )}
             />
             <Column
@@ -50,11 +64,25 @@ const UsersTable = () => {
                 )}
             />
             <Column
-                title="Status"
-                key="status"
+                title="Surename"
+                key="surename"
                 render={(data) => (
-                    <Tag color='red' key={data.key}>
-                        Idle
+                    <a onClick={() => { console.log(data.key) }} >{data.surename}</a>
+                )}
+            />
+            <Column
+                title="Email"
+                key="email"
+                render={(data) => (
+                    <a onClick={() => { console.log(data.key) }} >{data.email}</a>
+                )}
+            />
+            <Column
+                title="Status"
+                key="active"
+                render={(data) => (
+                    <Tag color={data.active ? 'green' : 'red'} key={data.key}>
+                        {data.active ? 'Active' : 'Idle'}
                     </Tag>
                 )}
             />

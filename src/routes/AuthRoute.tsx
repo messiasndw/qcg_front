@@ -12,15 +12,10 @@ export type PrivateRouteProps = {
 
 const AuthRoute = ({ ...routeProps }: PrivateRouteProps) => {
 
-    const dispatch = useDispatch()
-    const { isMeing, isAuthenticated } = useSelector(({ Auth }: ReduxState) => Auth)
-    React.useEffect(() => {
-        // dispatch(toast({}))
-        dispatch(me())
-    }, [])
+    const isAuthenticated = useSelector(({ Auth }: ReduxState) => Auth.isAuthenticated)
 
     if (isAuthenticated || !!localStorage.getItem('access_token')) {
-        return !isMeing ? <ManagmentLayout><Route {...routeProps} /></ManagmentLayout> : <LoadingPage></LoadingPage>
+        return <ManagmentLayout><Route {...routeProps} /></ManagmentLayout>
     }
     return <Redirect to={{ pathname: '/login' }} />
 

@@ -10,7 +10,7 @@ interface AuthState{
 }
 
 export const uiSlice = createSlice({
-    name: 'auth',
+    name: 'ui',
     initialState,
     reducers: {
         toast: (state,action : PayloadAction<any>) => {

@@ -13,10 +13,6 @@ const Register = () => {
     // const { isRegistering } = useSelector((state: ReduxState) => state.Auth)
     const isRegistering = false
 
-    useEffect(() => {
-        
-    })
-
     const onFinish = (form: any) => {
         dispatch(register(form))
     };

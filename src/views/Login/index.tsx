@@ -2,6 +2,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { login } from '../../redux/Auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
+import { useEffect } from 'react';
 
 const Login = () => {
 
@@ -15,6 +16,10 @@ const Login = () => {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+    useEffect(() => {
+        console.log("login")
+    },[])
 
     return (
         <div>

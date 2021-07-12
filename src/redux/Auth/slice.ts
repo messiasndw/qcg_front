@@ -77,6 +77,7 @@ export const authSlice = createSlice({
             state.me.company.name = company.name
             state.me.company._id = company._id
             state.isMeing = false
+            state.isAuthenticated = true
         })
         .addCase(me.rejected, (state,action) => {
             state.isMeing = false

@@ -4,7 +4,7 @@ import KeysTable from "./Table";
 import { Typography, Space } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { storeKey } from "../../../redux/Keys/slice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
 import WebSocketContext from "../../../context/websocket";
 import { ReduxState } from "../../../redux/store";
@@ -17,13 +17,13 @@ const KeysGenerate = () => {
     const dispatch = useDispatch()
     const socket = useContext(WebSocketContext)
     const [form] = Form.useForm()
-    const {company} = useSelector(({Auth}: ReduxState) => Auth.me )
+    const { company } = useSelector(({ Auth }: ReduxState) => Auth.me)
 
     useEffect(() => {
-        socket.on(`${company._id}/keys/managment`,(data:any) => {
-            dispatch(toast({title: 'Info', body: data.message, type: 'info'}))
+        socket.on(`${company._id}/keys/managment`, (data: any) => {
+            dispatch(toast({ title: 'Info', body: data.message, type: 'info' }))
         })
-    },[])
+    }, [])
 
     const onNewKey = () => {
         Modal.confirm({

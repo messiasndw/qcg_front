@@ -15,7 +15,7 @@ interface KeysState{
 }
 
 export const keysSlice = createSlice({
-    name: 'auth',
+    name: 'keys',
     initialState,
     reducers: {
         

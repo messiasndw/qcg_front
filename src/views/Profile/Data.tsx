@@ -8,8 +8,9 @@ import { ReduxState} from '../../redux/store';
 const Data = () => {
 
     const dispatch = useDispatch()
-    const { isUpdatingProfile } = useSelector((state: ReduxState) => state.Auth)
-    const { name, surename, email, company } = useSelector((state: ReduxState) => state.Auth.me)
+    const isUpdatingProfile = useSelector((state: ReduxState) => state.Auth.isUpdatingProfile)
+    const user = useSelector((state: ReduxState) => state.Auth.me)
+    const company = useSelector((state: ReduxState) => state.Auth.me.company)
 
     const [form] = Form.useForm()
 
@@ -48,7 +49,7 @@ const Data = () => {
             <Row>
                 <Col span='12'>
                     <Form.Item
-                        initialValue={name}
+                        initialValue={user.name}
                         label="Name"
                         name="name"
                         rules={[{ required: true, message: 'Please input your username!' }]}
@@ -58,7 +59,7 @@ const Data = () => {
                 </Col>
                 <Col span='12'>
                     <Form.Item
-                        initialValue={surename}
+                        initialValue={user.surename}
                         label="Surename"
                         name="surename"
                         rules={[{ required: true, message: 'Please input your surename!' }]}
@@ -71,7 +72,7 @@ const Data = () => {
             <Row>
                 <Col span='12'>
                     <Form.Item
-                        initialValue={email}
+                        initialValue={user.email}
                         label="Email"
                         name="email"
                         rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: 'Email must be valid!' }]}

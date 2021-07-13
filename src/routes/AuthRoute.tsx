@@ -12,7 +12,7 @@ export type PrivateRouteProps = {
 
 const AuthRoute = ({ ...routeProps }: PrivateRouteProps) => {
 
-    const isAuthenticated = useSelector(({ Auth }: ReduxState) => Auth.isAuthenticated)
+    const {isAuthenticated} = useSelector(({ Auth }: ReduxState) => Auth)
 
     if (isAuthenticated || !!localStorage.getItem('access_token')) {
         return <ManagmentLayout><Route {...routeProps} /></ManagmentLayout>

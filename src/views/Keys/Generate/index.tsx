@@ -20,7 +20,7 @@ const KeysGenerate = () => {
     const { company } = useSelector(({ Auth }: ReduxState) => Auth.me)
 
     useEffect(() => {
-        socket.on(`${company._id}/keys/managment`, (data: any) => {
+        socket.on(`${company.id}/keys/managment`, (data: any) => {
             dispatch(toast({ title: 'Info', body: data.message, type: 'info' }))
         })
     }, [])

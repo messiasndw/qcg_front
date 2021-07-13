@@ -25,12 +25,18 @@ const Create = (props: Create) => {
     const showModal = () => {
     };
 
-    const onFinish = (form: Form) => {
-        dispatch(storeUser(form))
+    const onFinish = (formData: Form) => {
+        const data = {...formData, closeForm: onCancel}
+        dispatch(storeUser(data))
     };
 
     const onFinishFailed = () => {
     };
+
+    const onCancel = () => {
+        props.handleCloseModal()
+        form.resetFields()
+    }
 
     const passwordValidation = ({ getFieldValue }: any) => ({
         validator(_: any, value: any) {
@@ -43,7 +49,7 @@ const Create = (props: Create) => {
 
     return (
         <>
-            <Modal cancelButtonProps={{disabled: false}} okButtonProps={{disabled: false}} title="New User" visible={props.isOpen} onOk={() => form.submit()} onCancel={props.handleCloseModal}>
+            <Modal cancelButtonProps={{disabled: false}} okButtonProps={{disabled: false}} title="New User" visible={props.isOpen} onOk={() => form.submit()} onCancel={onCancel}>
                 <Form
                     form={form}
                     style={{display:'flex', flexDirection:'column'}}

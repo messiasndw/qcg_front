@@ -8,11 +8,12 @@ const initialState: AuthState = {
     isMeing: false,
     isUpdatingProfile: false,
     me:{
+        id: '',
         name: '',
         surename: '',
         email: '',
         company: {
-            _id: '',
+            id: '',
             name: ''
         }
     }
@@ -24,11 +25,12 @@ interface AuthState{
     isMeing: boolean,
     isUpdatingProfile: boolean,
     me:{
+        id: string,
         name: string,
         surename: string,
         email: string,
         company: {
-            _id: string,
+            id: string,
             name: string
         }
     }
@@ -70,12 +72,13 @@ export const authSlice = createSlice({
             state.isMeing = true
         })
         .addCase(me.fulfilled, (state,action) => {
-            const {name, email, surename, company} = action.payload
+            const {id, name, email, surename, company} = action.payload
+            state.me.id = id
             state.me.name = name
             state.me.surename = surename
             state.me.email = email
             state.me.company.name = company.name
-            state.me.company._id = company._id
+            state.me.company.id = company._id
             state.isMeing = false
             state.isAuthenticated = true
         })

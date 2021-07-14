@@ -9,7 +9,8 @@ const initialState: UsersState = {
     filter:{
         name: '',
         surename: '',
-        email: ''
+        email: '',
+        active: null,
     }
 }
 
@@ -17,6 +18,7 @@ interface Filter{
     name: string,
     surename: string,
     email: string,
+    active: any
 }
 interface UsersState{
     isFetching: boolean,
@@ -30,6 +32,13 @@ export const usersSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
+        updateFilter: (state,action) => {
+            for (const key in action.payload) {
+                if (state.filter.hasOwnProperty(key)) {
+                    state.filter[key as keyof Filter] = action.payload[key]
+                }
+            }
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -56,6 +65,7 @@ export const usersSlice = createSlice({
     }
 })
 
+export const {updateFilter} = usersSlice.actions
 export {storeUser, fetchUsers}
 export default usersSlice.reducer
 

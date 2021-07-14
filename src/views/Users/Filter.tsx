@@ -1,21 +1,32 @@
-import { Form, Input, Button, Checkbox, Row, Col, Collapse, Cascader } from 'antd';
+import { Form, Input, Button, Checkbox, Row, Col, Collapse, Select } from 'antd';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateProfile } from '../../redux/Auth/actions';
 import { ReduxState } from '../../redux/store';
 import { fetchUsers } from '../../redux/Users/actions';
+import { updateFilter } from '../../redux/Users/slice';
 
 const { Panel } = Collapse;
+
+type FilterForm = {
+    name: string,
+    surename: string,
+    email: string,
+    active: number
+}
 
 const Filter = () => {
 
     const dispatch = useDispatch()
     const [form] = Form.useForm()
-    
-    const onFinish = (values: any) => {
+
+    const filter = useSelector(({Users}: ReduxState) => Users.filter)
+
+    const onFinish = (values: FilterForm) => {
         console.log(values)
-        dispatch(fetchUsers(values))
+        dispatch(updateFilter(values))
+        dispatch(fetchUsers({}))
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -24,7 +35,7 @@ const Filter = () => {
 
     useEffect(() => {
         dispatch(fetchUsers({}))
-    },[])
+    }, [])
 
     const activeOptions = [{ label: 'Active', value: 'true' }, { label: 'Idle', value: 'false' }]
 
@@ -39,7 +50,7 @@ const Filter = () => {
                     name='basic'
                     // labelCol={{ span: 14 }}
                     wrapperCol={{ span: 20 }}
-                    initialValues={{ remember: true }}
+                    initialValues={{ active: filter.active, name: filter.name, surename: filter.surename, email: filter.email }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
@@ -75,7 +86,10 @@ const Filter = () => {
                                 label="Status"
                                 name='active'
                             >
-                                <Cascader placeholder='None' name='active' options={activeOptions} />
+                                <Select placeholder='None' onChange={(value: string) => {form.setFieldsValue({active:parseInt(value)})}} allowClear>
+                                    <Select.Option value={'1'}>Active</Select.Option>
+                                    <Select.Option value={'0'}>Idle</Select.Option>
+                                </Select>
                             </Form.Item>
                         </Col>
 

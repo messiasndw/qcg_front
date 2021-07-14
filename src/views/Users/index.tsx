@@ -9,10 +9,6 @@ const Users = () => {
 
     const [modal,setModal] = useState({open: false, data: {}})
 
-    useEffect(() => {
-        console.log('12')
-    },[])
-
     const handleCloseModal = () => {
         setModal(prevState => {
             return {open: false, data: {}}

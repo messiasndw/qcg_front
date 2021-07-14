@@ -17,7 +17,7 @@ export const login = createAsyncThunk('auth/login', async ({ email, password }: 
     }
 })
 
-export const me = createAsyncThunk('auth/me', async (thunkAPI) => {
+export const me = createAsyncThunk('auth/me', async (_,thunkAPI) => {
     const {data} = await axios.post('/auth/me')
     return data
 })

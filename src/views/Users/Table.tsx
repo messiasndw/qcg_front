@@ -15,7 +15,6 @@ const { Column, ColumnGroup } = Table;
 const UsersTable = () => {
 
     const {users, isFetching} = useSelector(({Users}: ReduxState) => Users)
-    console.log(users)
 
     const data = users.map((data: any,key) => {
         const {_id, name, surename, email, active} = data
@@ -37,15 +36,6 @@ const UsersTable = () => {
             }
         });
     }
-
-    // const data = [
-    //     {
-    //         key: '1',
-    //         name: 'John Brown',
-    //         age: 32,
-    //         address: 'New York No. 1 Lake Park',
-    //     },
-    // ];
 
     return (
         <Table dataSource={data} loading={isFetching} >

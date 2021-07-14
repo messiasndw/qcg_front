@@ -93,7 +93,6 @@ export const authSlice = createSlice({
                 state.isUpdatingProfile = false
                 for (const key in action.payload) {
                     if (state.me.hasOwnProperty(key)) {
-                        console.log(key)
                         state.me[key as keyof Me] = action.payload[key]
                     }
                 }

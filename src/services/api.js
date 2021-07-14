@@ -9,12 +9,13 @@ const Axios = axios.create({
 });
 
 export const setInterceptors = (store) => {
-  const {dispatch} = store
+
+  const { dispatch } = store
   Axios.interceptors.request.use(function (config) {
 
     const token = localStorage.getItem('access_token')
     if (!!token) {
-        config.headers.Authorization = "Bearer " + token
+      config.headers.Authorization = "Bearer " + token
     }
     return config;
   }, function (error) {
@@ -24,19 +25,34 @@ export const setInterceptors = (store) => {
 
   // Add a response interceptor
   Axios.interceptors.response.use(function (response) {
-    
-    return response;
-  }, function (error) {
-    
-    const {response} = error
 
     switch (response.status) {
-      
+      case 201:
+        dispatch(
+          toast({
+            title: 'Success!',
+            body: response.data.message,
+            type: 'success'
+          })
+        )
+        break;
+
+      default:
+        break;
+    }
+
+    return response;
+  }, function (error) {
+
+    const { response } = error
+
+    switch (response.status) {
+
       case 401:
-        dispatch(toast({title:'Authentication error', body:response.data.message, type: 'error'}))
+        dispatch(toast({ title: 'Authentication error', body: response.data.message, type: 'error' }))
         dispatch(logout())
         break;
-    
+
       default:
         break;
 

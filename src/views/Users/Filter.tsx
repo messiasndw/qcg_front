@@ -15,8 +15,7 @@ const Filter = () => {
     
     const onFinish = (values: any) => {
         console.log(values)
-        // dispatch(updateProfile(values))
-        // console.log(values);
+        dispatch(fetchUsers(values))
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -24,7 +23,6 @@ const Filter = () => {
     };
 
     useEffect(() => {
-        console.log("2")
         dispatch(fetchUsers({}))
     },[])
 
@@ -51,7 +49,7 @@ const Filter = () => {
                                 label="Name"
                                 name="name"
                             >
-                                <Input placeholder='None' disabled={false} />
+                                <Input placeholder='None' type='search' disabled={false} />
                             </Form.Item>
                         </Col>
                         <Col span='12'>

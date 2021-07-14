@@ -24,7 +24,6 @@ const ManagmentLayout: FC<ManagmentProp> = ({ children }) => {
   const {isMeing, isAuthenticated} = useSelector(({ Auth }: ReduxState) => Auth)
   const dispatch = useDispatch()
   React.useEffect(() => {
-    // dispatch(toast({}))
     dispatch(me())
     console.log("effect me")
   }, [])

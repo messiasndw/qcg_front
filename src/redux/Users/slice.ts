@@ -5,13 +5,25 @@ const initialState: UsersState = {
     isFetching: false,
     isStoring: false,
     isDeleting: false,
-    users: []
+    users: [],
+    filter:{
+        name: '',
+        surename: '',
+        email: ''
+    }
+}
+
+interface Filter{
+    name: string,
+    surename: string,
+    email: string,
 }
 interface UsersState{
     isFetching: boolean,
     isStoring: boolean,
     isDeleting: boolean,
     users: []
+    filter: Filter
 }
 
 export const usersSlice = createSlice({

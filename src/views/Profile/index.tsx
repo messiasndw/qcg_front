@@ -3,18 +3,12 @@ import { Card } from 'antd';
 import Avatar from './Avatar';
 import Data from './Data';
 import { Button } from 'antd';
-import { useEffect } from 'react';
 
 const {useBreakpoint} = Grid
 
 const Profile = () => {
 
     const screens = useBreakpoint()
-
-    useEffect(() => {
-        fetch('sasd')
-        console.log("profileeeeeee")
-    },[])
 
     return (
         <Row >

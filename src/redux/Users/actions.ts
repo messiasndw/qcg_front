@@ -4,7 +4,7 @@ import axios from '../../services/api'
 export type fetch = {}
 export const fetchUsers = createAsyncThunk('users/fetch', async (filter: fetch, thunkAPI) => {
     const { data } = await axios.get('company/users', {params: filter})
-    return data
+    return data.data
 })
 
 export type store = {closeForm: any}

@@ -28,6 +28,6 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (paylo
     if (response.status === 201){
         thunkAPI.dispatch(toast({type: 'success', title: 'Success!', body: 'Profile Updated!'}))
     }
-    return response.data
+    return response.data.data
    
 })

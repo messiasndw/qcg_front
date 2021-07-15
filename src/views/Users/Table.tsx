@@ -1,5 +1,5 @@
 import { Table, Tag, Space, Button, Avatar, Tooltip, Modal } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
     DeleteOutlined,
@@ -9,20 +9,23 @@ import {
     ExclamationCircleFilled
 } from '@ant-design/icons';
 import { ReduxState } from '../../redux/store';
+import { fetchUsers, updateFilter } from '../../redux/Users/slice';
 
-const { Column, ColumnGroup } = Table;
+const { Column} = Table;
 
-const UsersTable = () => {
+const UsersTable = (props : any) => {
 
-    const {users, isFetching} = useSelector(({Users}: ReduxState) => Users)
+    const {users, isFetching, total} = useSelector(({Users}: ReduxState) => Users)
+    const {filter} = useSelector(({Users}: ReduxState) => Users)
+
+    const dispatch =  useDispatch()
 
     const data = users.map((data: any,key) => {
-        const {_id, name, surename, email, active} = data
+        const {id, name, surename, email, active, company} = data
         return (
-            {key,_id, name, surename, email,active}
+            {key,id, name, surename, email,active, company}
         )
     })
-
 
     const confirmDelete = (user: any) => {
         Modal.confirm({
@@ -38,7 +41,17 @@ const UsersTable = () => {
     }
 
     return (
-        <Table dataSource={data} loading={isFetching} >
+        <Table dataSource={data} loading={isFetching} 
+        pagination={{
+            total: parseInt(total), 
+            showSizeChanger: false,
+            hideOnSinglePage: true,
+            current:parseInt(filter.page),
+            pageSize:10, 
+            onChange: (page) => {
+                dispatch(updateFilter({page: page}))
+                dispatch(fetchUsers({}))
+            } }} >
             <Column
                 title="Picture"
                 key="picture"
@@ -49,22 +62,22 @@ const UsersTable = () => {
             <Column
                 title="Name"
                 key="name"
-                render={(data) => (
-                    <a onClick={() => { console.log(data.key) }} >{data.name}</a>
+                render={(user) => (
+                    <a onClick={(e) => props.setModal({open: 'edit', data: user})} >{user.name}</a>
                 )}
             />
             <Column
                 title="Surename"
                 key="surename"
-                render={(data) => (
-                    <a onClick={() => { console.log(data.key) }} >{data.surename}</a>
+                render={(user) => (
+                    <a onClick={(e) => props.setModal({open: 'edit', data: user})} >{user.surename}</a>
                 )}
             />
             <Column
                 title="Email"
                 key="email"
-                render={(data) => (
-                    <a onClick={() => { console.log(data.key) }} >{data.email}</a>
+                render={(user) => (
+                    <a onClick={(e) => props.setModal({open: 'edit', data: user})} >{user.email}</a>
                 )}
             />
             <Column
@@ -82,7 +95,7 @@ const UsersTable = () => {
                 key="action"
                 render={(user) => (
                     <Space size="middle">
-                        <Tooltip title='Edit'><Button type='primary'><EditOutlined /></Button></Tooltip>
+                        <Tooltip title='Edit'><Button onClick={(e) => props.setModal({open: 'edit', data: user})} type='primary'><EditOutlined /></Button></Tooltip>
                         <Tooltip title='Notify'><Button type='primary'><MessageOutlined /></Button></Tooltip>
                         <Tooltip title='Delete'><Button onClick={() => confirmDelete(user)} type='primary' danger><DeleteOutlined /></Button></Tooltip>
                     </Space>

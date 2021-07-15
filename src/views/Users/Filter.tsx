@@ -21,33 +21,31 @@ const Filter = () => {
     const dispatch = useDispatch()
     const [form] = Form.useForm()
 
-    const filter = useSelector(({Users}: ReduxState) => Users.filter)
+    const filter = useSelector(({ Users }: ReduxState) => Users.filter)
 
     const onFinish = (values: FilterForm) => {
         console.log(values)
-        dispatch(updateFilter(values))
+        dispatch(updateFilter({...values,page:'1'}))
         dispatch(fetchUsers({}))
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
     };
 
     useEffect(() => {
         dispatch(fetchUsers({}))
     }, [])
 
-    const activeOptions = [{ label: 'Active', value: 'true' }, { label: 'Idle', value: 'false' }]
-
+    const activeOptions = [{ label: 'Active', value: 1 }, { label: 'Idle', value: 0 }]
     return (
 
-        <Collapse  >
-            <Panel header="Show/Hide Filter" key="filter">
+        <Collapse ghost>
+            <Panel showArrow={false} header="Show/Hide Filter" key="filter">
                 <Form
                     style={{ padding: '20px' }}
                     form={form}
                     layout='vertical'
-                    name='basic'
+                    name='filter'
                     // labelCol={{ span: 14 }}
                     wrapperCol={{ span: 20 }}
                     initialValues={{ active: filter.active, name: filter.name, surename: filter.surename, email: filter.email }}
@@ -60,7 +58,7 @@ const Filter = () => {
                                 label="Name"
                                 name="name"
                             >
-                                <Input placeholder='None' type='search' disabled={false} />
+                                <Input allowClear placeholder='None' type='search' disabled={false} />
                             </Form.Item>
                         </Col>
                         <Col span='12'>
@@ -68,7 +66,7 @@ const Filter = () => {
                                 label="Surename"
                                 name="surename"
                             >
-                                <Input placeholder='None' disabled={false} />
+                                <Input allowClear placeholder='None' disabled={false} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -78,7 +76,7 @@ const Filter = () => {
                                 label="Email"
                                 name="email"
                             >
-                                <Input placeholder='None' disabled={false} />
+                                <Input allowClear placeholder='None' disabled={false} />
                             </Form.Item>
                         </Col>
                         <Col span='12'>
@@ -86,9 +84,11 @@ const Filter = () => {
                                 label="Status"
                                 name='active'
                             >
-                                <Select placeholder='None' onChange={(value: string) => {form.setFieldsValue({active:parseInt(value)})}} allowClear>
-                                    <Select.Option value={'1'}>Active</Select.Option>
-                                    <Select.Option value={'0'}>Idle</Select.Option>
+                                <Select
+                                    options={activeOptions}
+                                    onClear={() => { form.setFieldsValue({ active: null }) }}
+                                    placeholder='None'
+                                    onChange={(value: string) => { form.setFieldsValue({ active: parseInt(value)}) }} allowClear>
                                 </Select>
                             </Form.Item>
                         </Col>

@@ -54,7 +54,7 @@ const Create = (props: Create) => {
                     form={form}
                     style={{display:'flex', flexDirection:'column'}}
                     layout='vertical'
-                    name="basic"
+                    name="create"
                     // labelCol={{ span: 8 }}
                     // wrapperCol={{ span: 16 }}
                     initialValues={{ remember: true }}

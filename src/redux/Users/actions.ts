@@ -11,7 +11,7 @@ type OptionalFilter = {
     surename?: string,
     email?: string,
     page?: string,
-    active?: string
+    active?: string,
 }
 type fetchReturn = { data: [], total: string, page: string }
 export const fetchUsers = createAsyncThunk<fetchReturn, OptionalFilter, Thunk>('users/fetch', async (optionalFilter = {}, thunkAPI) => {
@@ -32,9 +32,9 @@ export const storeUser = createAsyncThunk('users/store', async (user: store, thu
     return response.data
 })
 
-type Update = { closeModal: any, id: any, fields: {}}
+type Update = { closeModal: any, id: any, fields: {} }
 export const updateUser = createAsyncThunk('users/update', async (user: Update, thunkAPI) => {
-    const {closeModal, id} = user;
+    const { closeModal, id } = user;
     const response = await axios.put(`company/users/${id}`, { ...user.fields })
     if (response.status === 200) {
         closeModal()
@@ -42,3 +42,10 @@ export const updateUser = createAsyncThunk('users/update', async (user: Update, 
     }
     return response.data
 })
+
+// THIS FETCH ALL USERS WITH NO PARAMS OR PAGINATION
+export const fetchAllUsers = createAsyncThunk('users/fetchAll', async () => {
+    const { data } = await axios.get('company/users/all', { params: {} })
+    return data
+})
+

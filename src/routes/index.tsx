@@ -13,6 +13,7 @@ import Login from "../views/Login";
 import Register from "../views/Register";
 import Profile from "../views/Profile";
 import Users from "../views/Users";
+import Desks from '../views/Desks'
 import KeysGenerate from "../views/Keys/Generate";
 const x = () => {
     return <Button>a</Button>
@@ -27,7 +28,7 @@ export default function App() {
                 <AuthRoute exact path='/panel' component={Panel} />
                 <AuthRoute exact path='/profile' component={Profile} />
                 <AuthRoute exact path='/users' component={Users} />
-                <AuthRoute exact path='/desks' component={x} />
+                <AuthRoute exact path='/desks' component={Desks} />
                 <AuthRoute exact path='/keys/generate' component={KeysGenerate} />
                 
                 <Route path="/">

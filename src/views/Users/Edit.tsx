@@ -65,7 +65,9 @@ const Edit = (props: EditModal) => {
             <Modal
                 afterClose={() => { form.resetFields() }}
                 cancelButtonProps={{ disabled: false }}
-                okButtonProps={{ disabled: false }} title="Edit User" visible={props.isOpen} onOk={() => form.submit()}
+                okButtonProps={{ disabled: false }} title="Edit User" 
+                visible={props.isOpen} 
+                onOk={() => form.submit()}
                 onCancel={onCancel}>
                 <Form
                     form={form}

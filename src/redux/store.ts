@@ -4,13 +4,15 @@ import Auth from './Auth/slice'
 import Ui from './Ui/slice'
 import Keys from './Keys/slice'
 import Users from './Users/slice'
+import Desks from './Desks/slice'
 
 export const store = configureStore({
     reducer: {
         Auth,
         Ui,
         Keys,
-        Users
+        Users,
+        Desks
     },
 })
 

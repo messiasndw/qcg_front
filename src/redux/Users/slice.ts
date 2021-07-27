@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {fetchUsers,storeUser, updateUser} from './actions'
+import {fetchUsers,storeUser, updateUser, fetchAllUsers} from './actions'
 
 const initialState: UsersState = {
     isFetching: false,
@@ -7,6 +7,7 @@ const initialState: UsersState = {
     isDeleting: false,
     isUpdating: false,
     users: [],
+    allUsers: [],
     filter:{
         name: '',
         surename: '',
@@ -29,7 +30,8 @@ interface UsersState{
     isStoring: boolean,
     isDeleting: boolean,
     isUpdating: boolean,
-    users: []
+    users: [],
+    allUsers: [],
     filter: Filter,
     total: string
 }
@@ -78,6 +80,17 @@ export const usersSlice = createSlice({
         })
         .addCase(updateUser.rejected, (state,action) => {
             state.isUpdating = false
+        })
+        // FETCH ALL USERS
+        .addCase(fetchAllUsers.pending, (state,action) => {
+            state.isFetching = true
+        })
+        .addCase(fetchAllUsers.fulfilled, (state,{payload}) => {
+            state.isFetching = false
+            state.allUsers = payload.data
+        })
+        .addCase(fetchAllUsers.rejected, (state,action) => {
+            state.isFetching = false
         })
         
     }

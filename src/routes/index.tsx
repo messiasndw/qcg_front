@@ -7,6 +7,7 @@ import {
 import { Button } from "antd";
 import GuestRoute from "./GuestRoute";
 import AuthRoute from "./AuthRoute";
+import PanelRoute from "./PanelRoute";
 
 import Panel from '../layouts/Auth/Panel'
 import Login from "../views/Login";
@@ -15,6 +16,7 @@ import Profile from "../views/Profile";
 import Users from "../views/Users";
 import Desks from '../views/Desks'
 import KeysGenerate from "../views/Keys/Generate";
+import Departments from "../views/Departments";
 const x = () => {
     return <Button>a</Button>
 }
@@ -25,10 +27,11 @@ export default function App() {
             <Switch>
                 <GuestRoute exact path='/register' component={Register} />
                 <GuestRoute exact path='/login' component={Login} />
-                <AuthRoute exact path='/panel' component={Panel} />
+                <PanelRoute exact path='/panel' component={Panel} />
                 <AuthRoute exact path='/profile' component={Profile} />
                 <AuthRoute exact path='/users' component={Users} />
                 <AuthRoute exact path='/desks' component={Desks} />
+                <AuthRoute exact path='/departments' component={Departments} />
                 <AuthRoute exact path='/keys/generate' component={KeysGenerate} />
                 
                 <Route path="/">

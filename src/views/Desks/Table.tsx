@@ -41,6 +41,8 @@ const DesksTable = (props : any) => {
         });
     }
 
+    console.log(tableData)
+
     return (
         <Table dataSource={tableData} loading={isFetching} 
         pagination={{
@@ -55,7 +57,7 @@ const DesksTable = (props : any) => {
             } }} >
             <Column
                 title="Number"
-                key="name"
+                key="code"
                 render={(desk) => (
                     <a onClick={(e) => props.setModal({open: 'edit', data: desk})} >{desk.code}</a>
                 )}

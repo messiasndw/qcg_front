@@ -5,16 +5,16 @@ import Table from "./Table";
 import CreateModal from "./Create";
 import { useEffect } from "react";
 import EditModal from "./Edit";
-import EditUsers from './EditUsers'
+import EditDesksModal from './EditDesks'
 import { useDispatch } from "react-redux";
-import { fetchDesks } from "../../redux/Desks/slice";
-const Users = () => {
+import { fetchDepartments } from "../../redux/Departments/slice";
+const Departments = () => {
 
     const [modal,setModal] = useState({open: '', data: {}})
     const dispatch = useDispatch()
 
     useEffect(() =>{
-        dispatch(fetchDesks({}))
+        dispatch(fetchDepartments({}))
     },[])
 
     const handleCloseModal = () => {
@@ -28,10 +28,10 @@ const Users = () => {
             <Row style={{}}>
                 <Col style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }} span='24'>
                     {/* NEW USER */}
-                    <Button onClick={() => {setModal(prevState => ({...prevState, open: 'create'}))}} type='primary'>New Desk</Button>
+                    <Button onClick={() => {setModal(prevState => ({...prevState, open: 'create'}))}} type='primary'>New Department</Button>
                     <CreateModal handleCloseModal={handleCloseModal} isOpen={modal.open == 'create'}></CreateModal>
-                    <EditUsers isOpen={modal.open == 'editUsers'} handleCloseModal={handleCloseModal} modal={modal} />
                     <EditModal isOpen={modal.open == 'edit'} handleCloseModal={handleCloseModal} data={modal.data}></EditModal>
+                    <EditDesksModal isOpen={modal.open == 'editDesks'} handleCloseModal={handleCloseModal} modal={modal}></EditDesksModal>
                 </Col>
 
                 <Col span='24'>
@@ -48,4 +48,4 @@ const Users = () => {
     )
 }
 
-export default Users
+export default Departments

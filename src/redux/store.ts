@@ -5,6 +5,7 @@ import Ui from './Ui/slice'
 import Keys from './Keys/slice'
 import Users from './Users/slice'
 import Desks from './Desks/slice'
+import Departments from './Departments/slice'
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
         Ui,
         Keys,
         Users,
-        Desks
+        Desks,
+        Departments
     },
 })
 

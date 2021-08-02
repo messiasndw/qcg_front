@@ -38,7 +38,7 @@ const Filter = () => {
     return (
 
         <Collapse >
-            <Panel showArrow={false} header="Show/Hide Filter" key="filter">
+            <Panel showArrow={false} header="Filter" key="filter">
                 <Form
                     style={{ padding: '20px' }}
                     form={form}

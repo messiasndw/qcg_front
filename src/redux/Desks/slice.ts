@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {fetchDesks, updateDesk, storeDesk, updateDeskUsers} from './actions'
+import {fetchDesks, updateDesk, storeDesk, updateDeskUsers, fetchAllDesks} from './actions'
 
 const initialState: DesksState = {
     isFetching: false,
@@ -12,6 +12,7 @@ const initialState: DesksState = {
         page: 1
     },
     data: [],
+    all:[],
     total: '0'
 }
 
@@ -28,6 +29,7 @@ interface DesksState{
     isUpdating: boolean,
     filter: Filter,
     data: [],
+    all: [],
     total: string
 }
 
@@ -84,10 +86,22 @@ export const desksSlice = createSlice({
         .addCase(updateDeskUsers.rejected, (state,action) => {
             state.isUpdating = false
         })
+        // FETCHA LL
+        .addCase(fetchAllDesks.pending, (state,action) => {
+            state.isFetching = true
+        })
+        .addCase(fetchAllDesks.fulfilled, (state,{payload}) => {
+            state.isFetching = false
+            state.all = payload
+            
+        })
+        .addCase(fetchAllDesks.rejected, (state,action) => {
+            state.isFetching = false
+        })
     }
 })
 
 export const {updateFilter} = desksSlice.actions
-export {fetchDesks, storeDesk, updateDesk, updateDeskUsers}
+export {fetchDesks, storeDesk, updateDesk, updateDeskUsers, fetchAllDesks}
 export default desksSlice.reducer
 

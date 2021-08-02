@@ -3,42 +3,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
 import { useEffect } from 'react';
 import { updateDesk } from '../../redux/Desks/actions';
+import { updateDepartment } from '../../redux/Departments/actions';
 
 type EditModal = {
     isOpen: boolean,
     handleCloseModal: any,
     data: {
         id?: string,
-        code?: string,
-        active?: boolean,
+        name?: string,
         company?: {
             name: string
         }
     }
 }
 
-export type EditUserFormType = {
+export type EditDepartmentFormType = {
     name?: string,
-    surename?: string,
-    email?: string,
-    confirmPassword?: string
 }
 
 const Edit = (props: EditModal) => {
     const dispatch = useDispatch()
-    const desk = props.data
+    const department = props.data
     const [form] = Form.useForm()
+    const {isUpdating} = useSelector(({Departments} : ReduxState) => Departments)
 
-    const {isUpdating} = useSelector(({Desks} : ReduxState) => Desks)
     useEffect(() => {
         if(props.data.hasOwnProperty('id')){
-            form.setFieldsValue({ ...desk })
-            console.log(desk)
         }
     }, [props.data])
 
-    const onFinish = (formData: any) => {
-        dispatch(updateDesk({id: desk.id, closeModal: onCancel, fields: formData}))
+    const onFinish = (formData: EditDepartmentFormType) => {
+        console.log(formData)
+        dispatch(updateDepartment({id: department.id, closeModal: onCancel, fields: formData}))
     };
 
     const onFinishFailed = ({ values }: any) => {
@@ -52,45 +48,39 @@ const Edit = (props: EditModal) => {
     return (
         <>
             <Modal
+                key='departmentsEditModal'
                 destroyOnClose
                 afterClose={() => { form.resetFields() }}
                 cancelButtonProps={{ disabled: isUpdating }}
-                okButtonProps={{ disabled: isUpdating }} title="Edit Desk"
+                okButtonProps={{ disabled: isUpdating }}
+                title="Edit Department"
                 visible={props.isOpen}
                 onOk={() => form.submit()}
-                onCancel={onCancel}>
+                onCancel={onCancel}
+                >
                 <Form
+                    key='editDepartments'
                     form={form}
                     style={{ display: 'flex', flexDirection: 'column' }}
                     layout='vertical'
                     name="edit"
-                    // labelCol={{ span: 8 }}
-                    // wrapperCol={{ span: 16 }}
-                    initialValues={{...desk}}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
+                    initialValues={{name:department.name}}
                 >
                     <Form.Item
-                        label="Code"
-                        name="code"
-                        rules={[{ required: true, message: 'Please input the desk code!' }, { min: 3, message: '3 characters minimum!' }, { max: 6, message: 'Only 6 characters length!' }]}
+                        label="Name"
+                        name="name"
+                        rules={[{ required: true, message: 'Please input the department name!' }, { min: 3, message: '3 characters minimum!' }, { max: 11, message: 'Only 11 characters length!' }]}
                     >
-                        <Input defaultValue={desk.code} disabled={isUpdating} />
+                        <Input disabled={isUpdating} />
                     </Form.Item>
 
                     <Form.Item
                         label="Company Name"
                     >
-                        <Input defaultValue={desk.company?.name} disabled={true} />
+                        <Input defaultValue={department.company?.name} disabled={true} />
                     </Form.Item>
-
-                    <Form.Item
-                        label="Status"
-                        name='active'
-                    >
-                        <Switch disabled={isUpdating} defaultChecked={desk.active} onChange={(checked: boolean) => { form.setFieldsValue({ active: checked }) }}></Switch>
-                    </Form.Item>
-
                 </Form>
             </Modal>
         </>

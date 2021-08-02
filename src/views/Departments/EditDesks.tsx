@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import { Form, Input, Modal, Alert, Switch, Transfer, Row, Col, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
-import { updateDeskUsers } from '../../redux/Desks/slice';
+import { fetchAllDesks, updateDeskUsers } from '../../redux/Desks/slice';
 import { fetchAllUsers } from '../../redux/Users/actions';
+import { Console } from 'console';
+import { updateDepartmentDesks } from '../../redux/Departments/actions';
 
 type EditUsersProps = {
     isOpen: boolean,
@@ -14,43 +16,42 @@ type EditUsersProps = {
         open: string,
         data: {
             id?: string
-            users?: {}
+            desks?: []
         }
     }
 }
 
-const EditUsers = ({ modal, isOpen, handleCloseModal }: EditUsersProps) => {
+const EditDesks = ({ modal, isOpen, handleCloseModal }: EditUsersProps) => {
 
     const dispatch = useDispatch()
 
-    const { isUpdating } = useSelector(({ Desks }: ReduxState) => Desks)
-    const { allUsers, isFetching } = useSelector(({ Users }: ReduxState) => Users)
-    const usersList = allUsers.map((user: any) => ({ key: user.id, title: user.name }))
+    const { isUpdating } = useSelector(({ Departments }: ReduxState) => Departments)
+    const { all, isFetching } = useSelector(({ Desks }: ReduxState) => Desks)
 
-    const [availableUsers, setAvailableUsers] = React.useState(usersList);
-    const [currentUsers, setCurrentUsers] = React.useState([]);
+    const deskList = all.map((data: any) => ({ key: data.id, title: data.code }))
+    const [availableData, setAvailableData] = React.useState(deskList);
+    const [currentData, setCurrentData] = React.useState([]);
     const onCancel = () => {
         handleCloseModal()
     }
 
     React.useEffect(() => {
-        if (modal.data.hasOwnProperty('id') && modal.open == 'editUsers') {
-            dispatch(fetchAllUsers())
-            setAvailableUsers(usersList)
-            setCurrentUsers(modal.data.users as [])
+        if (modal.data.hasOwnProperty('id') && modal.open == 'editDesks') {
+            dispatch(fetchAllDesks())
+            setAvailableData(deskList)
+            setCurrentData(modal.data.desks as [])
         }
     }, [modal.data]);
 
     // UPDATES THE AVAILABLE USERS EVERYTIME GET_ALL_USERS REQUEST IS DONE
     React.useEffect(() => {
-        if (allUsers != []) {
-            setAvailableUsers(usersList)
+        if (all != []) {
+            setAvailableData(deskList)
         }
-
-    }, [allUsers]);
+    }, [all]);
 
     const onChange = (newTargetKeys: any, direction: any, moveKeys: any) => {
-        setCurrentUsers(newTargetKeys);
+        setCurrentData(newTargetKeys);
     };
 
     return (
@@ -60,10 +61,11 @@ const EditUsers = ({ modal, isOpen, handleCloseModal }: EditUsersProps) => {
                 width={'700px'}
                 // afterClose={() => { form.resetFields() }}
                 cancelButtonProps={{ disabled: isFetching || isUpdating }}
-                okButtonProps={{ disabled: isFetching || isUpdating }} title="Edit Users"
+                okButtonProps={{ disabled: isFetching || isUpdating }} title="Edit Desks"
                 visible={isOpen}
                 onOk={() => {
-                    dispatch(updateDeskUsers({ id: modal.data.id, closeModal: onCancel, users: currentUsers }))
+                    console.log(currentData)
+                    dispatch(updateDepartmentDesks({ id: modal.data.id, closeModal: onCancel, data: currentData }))
                 }}
                 onCancel={onCancel}
             >
@@ -77,10 +79,10 @@ const EditUsers = ({ modal, isOpen, handleCloseModal }: EditUsersProps) => {
                         </Col>
                         <Col span={24}>
                             <Transfer
-                                disabled={isUpdating}
+                                disabled={isUpdating || isFetching}
                                 listStyle={{ width: '300px', height: '400px' }}
-                                dataSource={availableUsers}
-                                targetKeys={currentUsers}
+                                dataSource={availableData}
+                                targetKeys={currentData}
                                 onChange={onChange}
                                 render={item => item.title}
                                 oneWay={true}
@@ -93,4 +95,4 @@ const EditUsers = ({ modal, isOpen, handleCloseModal }: EditUsersProps) => {
     )
 }
 
-export default EditUsers
+export default EditDesks

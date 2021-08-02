@@ -36,7 +36,7 @@ export const updateDesk = createAsyncThunk('desks/update', async (desk: Update, 
     const response = await axios.put(`desks/${id}`, { ...desk.fields })
     if (response.status === 200) {
         closeModal()
-        // thunkAPI.dispatch(fetchDesks({}) as AppDispatch)
+        thunkAPI.dispatch(fetchDesks({}) as AppDispatch)
     }
     return response.data
 })
@@ -47,7 +47,12 @@ export const updateDeskUsers = createAsyncThunk('desks/updateUsers', async (data
     const response = await axios.post(`desks/users/${id}`, {users:data.users})
     if (response.status === 200) {
         closeModal()
-        // thunkAPI.dispatch(fetchDesks({}) as AppDispatch)
+        thunkAPI.dispatch(fetchDesks({}) as AppDispatch)
     }
     return response.data
+})
+
+export const fetchAllDesks = createAsyncThunk('desks/fetchAll', async () => {
+    const { data } = await axios.get('desks/all', { params: {} })
+    return data.data
 })

@@ -7,7 +7,8 @@ import {
   DesktopOutlined,
   TeamOutlined,
   UserOutlined,
-  KeyOutlined
+  KeyOutlined,
+  IdcardOutlined
 } from '@ant-design/icons';
 
 import { Link } from 'react-router-dom';
@@ -34,6 +35,9 @@ const SiderLayout = () => {
         </Menu.Item>
         <Menu.Item key="desks" icon={<DesktopOutlined />}>
           <Link to='/desks'>Desks</Link>
+        </Menu.Item>
+        <Menu.Item key="departments" icon={<IdcardOutlined />}>
+          <Link to='/departments'>Departments</Link>
         </Menu.Item>
         <SubMenu key="keys" icon={<KeyOutlined />} title="Keys">
           <Menu.Item key="keys1"><Link to='/keys/generate'>Generate</Link></Menu.Item>

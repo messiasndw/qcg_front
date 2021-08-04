@@ -90,7 +90,18 @@ export const desksSlice = createSlice({
         .addCase(updateDeskUsers.rejected, (state,action) => {
             state.isUpdating = false
         })
-        // FETCHA LL
+        //UPDATE DEPARTMENTS
+        .addCase(updateDeskDepartments.pending, (state,action) => {
+            state.isUpdating = true
+        })
+        .addCase(updateDeskDepartments.fulfilled, (state,{payload}) => {
+            state.isUpdating = false
+            
+        })
+        .addCase(updateDeskDepartments.rejected, (state,action) => {
+            state.isUpdating = false
+        })
+        // FETCHA ALL
         .addCase(fetchAllDesks.pending, (state,action) => {
             state.isFetching = true
         })

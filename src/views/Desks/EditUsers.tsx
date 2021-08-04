@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 
-import { Form, Input, Modal, Alert, Switch, Transfer, Row, Col, Spin } from 'antd';
+import { Modal, Transfer, Row, Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
 import { updateDeskUsers } from '../../redux/Desks/slice';
@@ -77,7 +77,7 @@ const EditUsers = ({ modal, isOpen, handleCloseModal }: EditUsersProps) => {
                         </Col>
                         <Col span={24}>
                             <Transfer
-                                disabled={isUpdating}
+                                disabled={isUpdating || isFetching}
                                 listStyle={{ width: '300px', height: '400px' }}
                                 dataSource={availableUsers}
                                 targetKeys={currentUsers}

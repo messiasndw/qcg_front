@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Form, Input, Modal, Alert, Switch, Transfer, Row, Col, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
-import { fetchAllDesks, updateDeskUsers } from '../../redux/Desks/slice';
+import { fetchAllDesks} from '../../redux/Desks/slice';
 import { fetchAllUsers } from '../../redux/Users/actions';
 import { Console } from 'console';
 import { updateDepartmentDesks } from '../../redux/Departments/actions';

@@ -43,6 +43,26 @@ export const updateUser = createAsyncThunk('users/update', async (user: Update, 
     return response.data
 })
 
+type UpdateDesks = { closeModal: any, id: any, data: string[]}
+export const updateUserDesks = createAsyncThunk('users/updateDesks', async (form: UpdateDesks, thunkAPI) => {
+    const {closeModal, id, data} = form;
+    const response = await axios.put(`company/users/desks/${id}`, {data})
+    if (response.status === 200) {
+        closeModal()
+        thunkAPI.dispatch(fetchUsers({}) as AppDispatch)
+    }
+    return response.data
+})
+
+type Delete = string
+export const deleteUser = createAsyncThunk('department/updateDesks', async (id: Delete, thunkAPI) => {
+    const response = await axios.delete(`company/users/${id}`)
+    if (response.status === 200){
+        thunkAPI.dispatch(fetchUsers({}) as AppDispatch)
+    }
+    return response.data
+})
+
 // THIS FETCH ALL USERS WITH NO PARAMS OR PAGINATION
 export const fetchAllUsers = createAsyncThunk('users/fetchAll', async () => {
     const { data } = await axios.get('company/users/all', { params: {} })

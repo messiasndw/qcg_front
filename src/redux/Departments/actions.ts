@@ -43,9 +43,9 @@ export const updateDepartment = createAsyncThunk('department/update', async (dep
 })
 
 type UpdateDesks = { closeModal: any, id: any, data: string[]}
-export const updateDepartmentDesks = createAsyncThunk('department/updateDesks', async (form: UpdateDesks, thunkAPI) => {
-    const {closeModal, id, data} = form;
-    const response = await axios.post(`departments/desks/${id}`, {data})
+export const updateDepartmentDesks = createAsyncThunk('department/updateDesks', async (payload: UpdateDesks, thunkAPI) => {
+    const {closeModal, id, data} = payload;
+    const response = await axios.put(`departments/desks/${id}`, {data})
     if (response.status === 201) {
         closeModal()
         thunkAPI.dispatch(fetchDepartments({}) as AppDispatch)

@@ -5,6 +5,7 @@ import UsersTable from "./Table";
 import CreateModal from "./Create";
 import { useEffect } from "react";
 import EditModal from "./Edit";
+import EditDesks from "./EditDesks";
 
 const Users = () => {
 
@@ -24,6 +25,7 @@ const Users = () => {
                     <Button onClick={() => {setModal(prevState => ({...prevState, open: 'create'}))}} type='primary'>New User</Button>
                     <CreateModal handleCloseModal={handleCloseModal} isOpen={modal.open == 'create'}></CreateModal>
                     <EditModal isOpen={modal.open == 'edit'} handleCloseModal={handleCloseModal} data={modal.data}></EditModal>
+                    <EditDesks isOpen={modal.open == 'editDesks'} handleCloseModal={handleCloseModal} modal={modal}></EditDesks>
                 </Col>
 
                 <Col span='24'>

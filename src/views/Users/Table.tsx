@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
     DeleteOutlined,
-    MessageOutlined,
     EditOutlined,
+    DesktopOutlined,
     UserOutlined,
     ExclamationCircleFilled
 } from '@ant-design/icons';
 import { ReduxState } from '../../redux/store';
 import { fetchUsers, updateFilter } from '../../redux/Users/slice';
+import { deleteUser } from '../../redux/Users/actions';
 
 const { Column} = Table;
 
@@ -21,9 +22,9 @@ const UsersTable = (props : any) => {
     const dispatch =  useDispatch()
 
     const data = users.map((data: any,key) => {
-        const {id, name, surename, email, active, company} = data
+        const {id, name, surename, email, active, company, desks} = data
         return (
-            {key,id, name, surename, email,active, company}
+            {key,id, name, surename, email,active, company, desks}
         )
     })
 
@@ -35,7 +36,7 @@ const UsersTable = (props : any) => {
             okText: 'Confirm',
             cancelText: 'Cancel',
             onOk: () => {
-                console.log(user.key)
+                dispatch(deleteUser(user.id))
             }
         });
     }
@@ -96,7 +97,7 @@ const UsersTable = (props : any) => {
                 render={(user) => (
                     <Space size="middle">
                         <Tooltip title='Edit'><Button onClick={(e) => props.setModal({open: 'edit', data: user})} type='primary'><EditOutlined /></Button></Tooltip>
-                        <Tooltip title='Notify'><Button type='primary'><MessageOutlined /></Button></Tooltip>
+                        <Tooltip title='Edit Desks'><Button onClick={(e) => props.setModal({open: 'editDesks', data: user})} type='primary'><DesktopOutlined /></Button></Tooltip>
                         <Tooltip title='Delete'><Button onClick={() => confirmDelete(user)} type='primary' danger><DeleteOutlined /></Button></Tooltip>
                     </Space>
                 )}

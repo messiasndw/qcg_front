@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {fetchUsers,storeUser, updateUser, fetchAllUsers} from './actions'
+import {fetchUsers,storeUser, updateUser, fetchAllUsers, updateUserDesks} from './actions'
 
 const initialState: UsersState = {
     isFetching: false,
@@ -97,6 +97,6 @@ export const usersSlice = createSlice({
 })
 
 export const {updateFilter} = usersSlice.actions
-export {storeUser, fetchUsers}
+export {storeUser, fetchUsers, updateUserDesks, updateUser}
 export default usersSlice.reducer
 

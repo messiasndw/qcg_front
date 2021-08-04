@@ -44,7 +44,7 @@ export const updateDesk = createAsyncThunk('desks/update', async (desk: Update, 
 type UpdateUsers = { closeModal: any, id: any, users: string[]}
 export const updateDeskUsers = createAsyncThunk('desks/updateUsers', async (data: UpdateUsers, thunkAPI) => {
     const {closeModal, id} = data;
-    const response = await axios.post(`desks/users/${id}`, {users:data.users})
+    const response = await axios.put(`desks/users/${id}`, {users:data.users})
     if (response.status === 200) {
         closeModal()
         thunkAPI.dispatch(fetchDesks({}) as AppDispatch)
@@ -55,7 +55,7 @@ export const updateDeskUsers = createAsyncThunk('desks/updateUsers', async (data
 type updateDeskDepartments = { closeModal: any, id: any, data: string[]}
 export const updateDeskDepartments = createAsyncThunk('desks/updateDepartment', async (payload: updateDeskDepartments, thunkAPI) => {
     const {closeModal, id, data} = payload;
-    const response = await axios.post(`desks/departments/${id}`, {data:data})
+    const response = await axios.put(`desks/departments/${id}`, {data:data})
     if (response.status === 200) {
         closeModal()
         thunkAPI.dispatch(fetchDesks({}) as AppDispatch)

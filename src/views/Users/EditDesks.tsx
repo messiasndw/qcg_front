@@ -1,11 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
-import {Modal, Transfer, Row, Col } from 'antd';
+import { Modal, Transfer, Row, Col} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../redux/store';
-import { fetchAllDepartments } from '../../redux/Departments/slice';
-import { updateDeskDepartments } from '../../redux/Desks/actions';
+import { fetchAllDesks } from '../../redux/Desks/slice';
+import { updateUserDesks } from '../../redux/Users/actions';
 
 type EditUsersProps = {
     isOpen: boolean,
@@ -14,38 +14,36 @@ type EditUsersProps = {
         open: string,
         data: {
             id?: string
-            departments?: []
+            desks?: []
         }
     }
 }
 
-const EditDepartments = ({ modal, isOpen, handleCloseModal }: EditUsersProps) => {
-
+const EditDesks = ({ modal, isOpen, handleCloseModal }: EditUsersProps) => {
     const dispatch = useDispatch()
 
-    const { isUpdating } = useSelector(({ Desks }: ReduxState) => Desks)
-    const { all, isFetching } = useSelector(({ Departments }: ReduxState) => Departments)
+    const { isUpdating } = useSelector(({ Departments }: ReduxState) => Departments)
+    const { all, isFetching } = useSelector(({ Desks }: ReduxState) => Desks)
 
-    const departmentsList = all.map((data: any) => ({ key: data.id, title: data.name }))
-    const [availableData, setAvailableData] = React.useState(departmentsList);
+    const deskList = all.map((data: any) => ({ key: data.id, title: data.code }))
+    const [availableData, setAvailableData] = React.useState(deskList);
     const [currentData, setCurrentData] = React.useState([]);
-
     const onCancel = () => {
         handleCloseModal()
     }
 
     React.useEffect(() => {
-        if (modal.data.hasOwnProperty('id') && modal.open == 'editDepartments') {
-            dispatch(fetchAllDepartments())
-            setAvailableData(departmentsList)
-            setCurrentData(modal.data.departments as [])
+        if (modal.data.hasOwnProperty('id') && modal.open == 'editDesks') {
+            dispatch(fetchAllDesks())
+            setAvailableData(deskList)
+            setCurrentData(modal.data.desks as [])
         }
     }, [modal.data]);
 
     // UPDATES THE AVAILABLE USERS EVERYTIME GET_ALL_USERS REQUEST IS DONE
     React.useEffect(() => {
         if (all != []) {
-            setAvailableData(departmentsList)
+            setAvailableData(deskList)
         }
     }, [all]);
 
@@ -60,11 +58,10 @@ const EditDepartments = ({ modal, isOpen, handleCloseModal }: EditUsersProps) =>
                 width={'700px'}
                 // afterClose={() => { form.resetFields() }}
                 cancelButtonProps={{ disabled: isFetching || isUpdating }}
-                okButtonProps={{ disabled: isFetching || isUpdating }} title="Edit Departments"
+                okButtonProps={{ disabled: isFetching || isUpdating }} title="Edit Desks"
                 visible={isOpen}
                 onOk={() => {
-                    console.log(currentData)
-                    dispatch(updateDeskDepartments({ id: modal.data.id, closeModal: onCancel, data: currentData }))
+                    dispatch(updateUserDesks({ id: modal.data.id, closeModal: onCancel, data: currentData }))
                 }}
                 onCancel={onCancel}
             >
@@ -94,4 +91,4 @@ const EditDepartments = ({ modal, isOpen, handleCloseModal }: EditUsersProps) =>
     )
 }
 
-export default EditDepartments
+export default EditDesks

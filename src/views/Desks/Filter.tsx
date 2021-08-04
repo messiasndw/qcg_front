@@ -1,18 +1,17 @@
-import { Form, Input, Button, Checkbox, Row, Col, Collapse, Select } from 'antd';
+import { Form, Input, Button, Checkbox, Row, Col, Collapse, Select, DatePicker } from 'antd';
 import { useEffect } from 'react';
-import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateProfile } from '../../redux/Auth/actions';
 import { ReduxState } from '../../redux/store';
+import moment from 'moment';
 import { fetchDesks, updateFilter } from '../../redux/Desks/slice';
 
 const { Panel } = Collapse;
 
 type FilterForm = {
-    name: string,
-    surename: string,
-    email: string,
-    active: number
+    code: string,
+    active: string,
+    createdAtInitial: string,
+    createdAtEnd: string
 }
 
 const Filter = () => {
@@ -22,8 +21,16 @@ const Filter = () => {
 
     const filter = useSelector(({ Desks }: ReduxState) => Desks.filter)
 
+    const initialValues = {
+        createdAtInitial: filter.createdAtInitial ? moment(new Date(filter.createdAtInitial)) : '',
+        createdAtEnd: filter.createdAtEnd ? moment(new Date(filter.createdAtEnd)) : '',
+        code: filter.code,
+        active: filter.active
+    }
+
     const onFinish = (values: FilterForm) => {
-        console.log(values)
+        values.createdAtInitial = values.createdAtInitial ? moment(values.createdAtInitial).format('MM-DD-YYYY') : ''
+        values.createdAtEnd = values.createdAtEnd ? moment(values.createdAtEnd).format('MM-DD-YYYY') : ''
         dispatch(updateFilter({ ...values, page: '1' }))
         dispatch(fetchDesks({}))
     };
@@ -31,10 +38,17 @@ const Filter = () => {
     const onFinishFailed = (errorInfo: any) => {
     };
 
-    useEffect(() => {
-    }, [])
+    const dateValidation = ({ getFieldValue }: any) => ({
+        validator(_: any, value: any) {
+            if ((!(new Date(value) > new Date(getFieldValue('createdAtEnd')))) || (getFieldValue('createdAtEnd') == null)) {
+                return Promise.resolve();
+            }
+            console.log(getFieldValue('createdAtEnd'))
+            return Promise.reject(new Error('Initial date cannot be greater than end date!'));
+        },
+    })
 
-    const activeOptions = [{ label: 'Active', value: 1 }, { label: 'Idle', value: 0 }]
+    const activeOptions = [{ label: 'Active', value: '1' }, { label: 'Idle', value: '0' }]
     return (
 
         <Collapse >
@@ -45,14 +59,14 @@ const Filter = () => {
                     layout='vertical'
                     name='filter'
                     wrapperCol={{ span: 20 }}
-                    initialValues={{ active: filter.active, code: filter.code }}
+                    initialValues={initialValues}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
                     <Row>
                         <Col span='12'>
                             <Form.Item
-                                label="Number"
+                                label="Code"
                                 name="code"
                             >
                                 <Input allowClear placeholder='None'disabled={false} />
@@ -67,8 +81,28 @@ const Filter = () => {
                                     options={activeOptions}
                                     onClear={() => { form.setFieldsValue({ active: null }) }}
                                     placeholder='None'
-                                    onChange={(value: string) => { form.setFieldsValue({ active: parseInt(value) }) }} allowClear>
+                                    onChange={(value: string) => { form.setFieldsValue({ active: value }) }} allowClear>
                                 </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col span='6'>
+                            <Form.Item
+                                label="Created At"
+                                name='createdAtInitial'
+                                dependencies={['createdAtEnd']}
+                                rules={[dateValidation]}
+                            >
+                                <DatePicker format='MM/DD/YYYY' placeholder='Initial Date' style={{ display: 'flex' }} allowClear />
+                            </Form.Item>
+                        </Col>
+                        <Col span='6'>
+                            <Form.Item
+                                label="Created At"
+                                name='createdAtEnd'
+                                dependencies={['createdAtInitial']}
+                                rules={[dateValidation]}
+                            >
+                                <DatePicker format='MM/DD/YYYY' placeholder='End Date' style={{ display: 'flex' }} allowClear />
                             </Form.Item>
                         </Col>
                     </Row>

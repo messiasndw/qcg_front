@@ -1,8 +1,5 @@
-import { Form, Input, Button, Checkbox, Row, Col, Collapse, Select, DatePicker } from 'antd';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { Form, Input, Button, Row, Col, Collapse, Select, DatePicker } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateProfile } from '../../redux/Auth/actions';
 import { ReduxState } from '../../redux/store';
 import { fetchDepartments, updateFilter } from '../../redux/Departments/slice';
 import moment from 'moment';
@@ -36,12 +33,11 @@ const Filter = () => {
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        alert(1)
     };
 
     const dateValidation = ({ getFieldValue }: any) => ({
         validator(_: any, value: any) {
-            if (!(new Date(value) > new Date(getFieldValue('createdAtEnd')))) {
+            if ((!(new Date(value) > new Date(getFieldValue('createdAtEnd')))) || (getFieldValue('createdAtEnd') == null)) {
                 return Promise.resolve();
             }
             return Promise.reject(new Error('Initial date cannot be greater than end date!'));
@@ -78,7 +74,7 @@ const Filter = () => {
                                 dependencies={['createdAtEnd']}
                                 rules={[dateValidation]}
                             >
-                                <DatePicker format='MM-DD-YYYY' placeholder='Initial Date' style={{ display: 'flex' }} />
+                                <DatePicker format='MM/DD/YYYY' placeholder='Initial Date' style={{ display: 'flex' }} />
                             </Form.Item>
                         </Col>
                         <Col span='6'>
@@ -87,7 +83,7 @@ const Filter = () => {
                                 label="Created At"
                                 name='createdAtEnd'
                             >
-                                <DatePicker format='MM-DD-YYYY' placeholder='End date' style={{ display: 'flex' }} />
+                                <DatePicker format='MM/DD/YYYY' placeholder='End date' style={{ display: 'flex' }} />
                             </Form.Item>
                         </Col>
                     </Row>

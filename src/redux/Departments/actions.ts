@@ -62,3 +62,8 @@ export const deleteDepartment = createAsyncThunk('department/updateDesks', async
     }
     return response.data
 })
+
+export const fetchAllDepartments = createAsyncThunk('department/fetchAll', async () => {
+    const { data } = await axios.get('departments/all', { params: {} })
+    return data.data
+})

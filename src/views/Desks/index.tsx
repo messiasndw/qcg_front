@@ -6,6 +6,7 @@ import CreateModal from "./Create";
 import { useEffect } from "react";
 import EditModal from "./Edit";
 import EditUsers from './EditUsers'
+import EditDepartments from "./EditDepartments";
 import { useDispatch } from "react-redux";
 import { fetchDesks } from "../../redux/Desks/slice";
 const Users = () => {
@@ -31,6 +32,7 @@ const Users = () => {
                     <Button onClick={() => {setModal(prevState => ({...prevState, open: 'create'}))}} type='primary'>New Desk</Button>
                     <CreateModal handleCloseModal={handleCloseModal} isOpen={modal.open == 'create'}></CreateModal>
                     <EditUsers isOpen={modal.open == 'editUsers'} handleCloseModal={handleCloseModal} modal={modal} />
+                    <EditDepartments isOpen={modal.open == 'editDepartments'} handleCloseModal={handleCloseModal} modal={modal}></EditDepartments>
                     <EditModal isOpen={modal.open == 'edit'} handleCloseModal={handleCloseModal} data={modal.data}></EditModal>
                 </Col>
 

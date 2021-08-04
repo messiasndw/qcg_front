@@ -75,7 +75,7 @@ const Edit = (props: EditModal) => {
                         name="code"
                         rules={[{ required: true, message: 'Please input the desk code!' }, { min: 3, message: '3 characters minimum!' }, { max: 6, message: 'Only 6 characters length!' }]}
                     >
-                        <Input defaultValue={desk.code} disabled={isUpdating} />
+                        <Input disabled={isUpdating} />
                     </Form.Item>
 
                     <Form.Item
@@ -87,6 +87,7 @@ const Edit = (props: EditModal) => {
                     <Form.Item
                         label="Status"
                         name='active'
+                        valuePropName='checked'
                     >
                         <Switch disabled={isUpdating} defaultChecked={desk.active} onChange={(checked: boolean) => { form.setFieldsValue({ active: checked }) }}></Switch>
                     </Form.Item>

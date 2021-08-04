@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {fetchDepartments, storeDepartment, updateDepartment, deleteDepartment} from './actions'
+import {fetchDepartments, storeDepartment, updateDepartment, deleteDepartment, fetchAllDepartments} from './actions'
 
 interface Filter{
     name: string,
@@ -15,6 +15,7 @@ interface DepartmentsState{
     isUpdating: boolean,
     filter: Filter,
     data: [],
+    all: [],
     total: string
 }
 
@@ -30,6 +31,7 @@ const initialState: DepartmentsState = {
         page: 1
     },
     data: [],
+    all: [],
     total: '0'
 }
 
@@ -64,9 +66,20 @@ const departmentsSlice = createSlice({
         .addCase(updateDepartment.rejected, (state,action) => {
             state.isUpdating = false
         })
+        //FETCH ALL
+        .addCase(fetchAllDepartments.pending, (state,action) => {
+            state.isFetching = true
+        })
+        .addCase(fetchAllDepartments.fulfilled, (state,{payload}) => {
+            state.isFetching = false
+            state.all = payload
+        })
+        .addCase(fetchAllDepartments.rejected, (state,action) => {
+            state.isFetching = false
+        })
     }
 })
 
 export const {updateFilter} = departmentsSlice.actions
-export {fetchDepartments,storeDepartment, updateDepartment, deleteDepartment}
+export {fetchDepartments,storeDepartment, updateDepartment, deleteDepartment, fetchAllDepartments}
 export default departmentsSlice.reducer

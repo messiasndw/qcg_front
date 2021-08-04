@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
-import {fetchDesks, updateDesk, storeDesk, updateDeskUsers, fetchAllDesks} from './actions'
+import {fetchDesks, updateDesk, storeDesk, updateDeskUsers, fetchAllDesks, updateDeskDepartments, deleteDesk} from './actions'
 
 const initialState: DesksState = {
     isFetching: false,
@@ -9,7 +9,9 @@ const initialState: DesksState = {
     filter:{
         code: '',
         active: null,
-        page: 1
+        page: 1,
+        createdAtInitial: '',
+        createdAtEnd: ''
     },
     data: [],
     all:[],
@@ -19,7 +21,9 @@ const initialState: DesksState = {
 interface Filter{
     code: string,
     active: any,
-    page: any
+    page: any,
+    createdAtInitial: string,
+    createdAtEnd: string
 }
 
 interface DesksState{
@@ -102,6 +106,6 @@ export const desksSlice = createSlice({
 })
 
 export const {updateFilter} = desksSlice.actions
-export {fetchDesks, storeDesk, updateDesk, updateDeskUsers, fetchAllDesks}
+export {fetchDesks, storeDesk, updateDesk, updateDeskUsers, fetchAllDesks, updateDeskDepartments, deleteDesk}
 export default desksSlice.reducer
 

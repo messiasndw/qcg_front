@@ -10,7 +10,8 @@ import {
     ExclamationCircleFilled,
 } from '@ant-design/icons';
 import { ReduxState } from '../../redux/store';
-import { fetchDesks, updateFilter } from '../../redux/Desks/slice';
+import { deleteDesk, fetchDesks, updateFilter } from '../../redux/Desks/slice';
+import moment from 'moment';
 
 const { Column} = Table;
 
@@ -22,9 +23,9 @@ const DesksTable = (props : any) => {
     const dispatch =  useDispatch()
 
     const tableData = data.map((data: any,key) => {
-        const {id, code, createdAt, users, active, company} = data
+        const {id, code, createdAt, users, active, company, departments} = data
         return (
-            {key,id, code, createdAt ,active, company, users}
+            {key,id, code, createdAt ,active, company, users, departments}
         )
     })
 
@@ -36,7 +37,7 @@ const DesksTable = (props : any) => {
             okText: 'Confirm',
             cancelText: 'Cancel',
             onOk: () => {
-                console.log(desk.key)
+                dispatch(deleteDesk(desk.id))
             }
         });
     }
@@ -66,7 +67,7 @@ const DesksTable = (props : any) => {
                 title="Created At"
                 key="createdAt"
                 render={(desk) => (
-                    <a onClick={(e) => props.setModal({open: 'edit', data: desk})} >{desk.createdAt}</a>
+                    <a onClick={(e) => props.setModal({open: 'edit', data: desk})} >{moment(desk.createdAt).format('MM/DD/YYYY')}</a>
                 )}
             />
             <Column

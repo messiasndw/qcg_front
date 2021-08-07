@@ -12,10 +12,11 @@ const initialState: AuthState = {
         name: '',
         surename: '',
         email: '',
+        desks: [],
         company: {
             id: '',
             name: ''
-        }
+        },
     }
 }
 interface Me {
@@ -23,6 +24,7 @@ interface Me {
     name: string,
     surename: string,
     email: string,
+    desks: []
     company: {
         id: string,
         name: string
@@ -72,13 +74,14 @@ export const authSlice = createSlice({
                 state.isMeing = true
             })
             .addCase(me.fulfilled, (state, action) => {
-                const { id, name, email, surename, company } = action.payload
+                const { id, name, email, surename, company, desks } = action.payload
                 state.me.id = id
                 state.me.name = name
                 state.me.surename = surename
                 state.me.email = email
                 state.me.company.name = company.name
                 state.me.company.id = company._id
+                state.me.desks = desks
                 state.isMeing = false
                 state.isAuthenticated = true
             })

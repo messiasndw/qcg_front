@@ -1,8 +1,6 @@
 import { Form, Input, Button, Checkbox, Row, Col, Collapse, Select } from 'antd';
 import { useEffect } from 'react';
-import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateProfile } from '../../redux/Auth/actions';
 import { ReduxState } from '../../redux/store';
 import { fetchUsers } from '../../redux/Users/actions';
 import { updateFilter } from '../../redux/Users/slice';
@@ -36,11 +34,11 @@ const Filter = () => {
         dispatch(fetchUsers({}))
     }, [])
 
-    const activeOptions = [{ label: 'Active', value: 1 }, { label: 'Idle', value: 0 }]
+    const activeOptions = [{ label: 'Active', value: '1' }, { label: 'Idle', value: '0' }]
     return (
 
         <Collapse >
-            <Panel showArrow={false} header="Show/Hide Filter" key="filter">
+            <Panel showArrow={false} header="Filter" key="filter">
                 <Form
                     style={{ padding: '20px' }}
                     form={form}
@@ -88,7 +86,7 @@ const Filter = () => {
                                     options={activeOptions}
                                     onClear={() => { form.setFieldsValue({ active: null }) }}
                                     placeholder='None'
-                                    onChange={(value: string) => { form.setFieldsValue({ active: parseInt(value)}) }} allowClear>
+                                    onChange={(value: string) => { form.setFieldsValue({ active: value}) }} allowClear>
                                 </Select>
                             </Form.Item>
                         </Col>
